@@ -30,8 +30,7 @@ class ProductType extends AbstractType
                     'label' => 'Catégorie',
                 ]
             )
-            ->add('save', SubmitType::class)
-        ;
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
