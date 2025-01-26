@@ -6,6 +6,8 @@ use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class CategoryType extends AbstractType
 {
@@ -15,7 +17,10 @@ class CategoryType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('image')
-            ->add('date_add')
+            ->add('date_add', DateTimeType::class, [
+                'data' => new \DateTime(),
+                'widget' => 'single_text'
+            ])
         ;
     }
 
