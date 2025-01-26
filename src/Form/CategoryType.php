@@ -28,14 +28,14 @@ class CategoryType extends AbstractType
                     'attr' => [
                         'placeholder' => 'Placeholder Image Catégorie'
                     ],
-                    'constraint' => [
+                    'constraints' => [
                         new File([
                             'maxSize' => '1024K',
                             'mimeTypes' => [
                                 'image/jpeg',
                                 'image/png'
                             ],
-                            'mimeTypeMessage' => 'Merci de charger un fichier jpg ou png',
+                            'mimeTypesMessage' => 'Merci de charger un fichier jpg ou png',
                             'uploadFormSizeErrorMessage' => 'La taille max autorisée est de 1024 kO',
                         ])
                     ],

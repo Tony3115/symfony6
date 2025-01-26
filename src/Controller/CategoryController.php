@@ -29,7 +29,26 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
+        $path = $this->getParameter('app.dir.public') . 'uploads/';
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form['image']->getData();
+            //dd($file);
+            if ($file) {
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newName = 'uploads/' . $originalName . '-' . uniqid() . '.' . $file->guessExtension();
+
+                $category->setImage($newName);
+
+                try {
+                    $file->move($path, $newName);
+                } catch (FileException $e) {
+                    echo $e->getMessage();
+                }
+            }
+
             $entityManager->persist($category);
             $entityManager->flush();
 
