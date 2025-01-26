@@ -24,7 +24,11 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul> #}
       </ul>
-     
+       {% if not app.user %}
+     <a href="/login">Se connecter</a>
+     {% else %}
+     {{ app.user.prenom }}
+     {% endif %}
     </div>
   </div>
 </nav>
