@@ -26,9 +26,10 @@ class UserType extends AbstractType
                 'multiple' => false,
                 'mapped' => false,
             ])
-            ->add('password', null, [
+            ->add('password', PasswordType::class, [
                 'data' => "",
-                'required' => false
+                'mapped' => false,
+                'required' => false,
             ])
             ->add('nom')
             ->add('prenom')

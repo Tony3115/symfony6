@@ -11,9 +11,8 @@
 <div class="example-wrapper">
     <h1>Page de contact {{ controller_name }}! ✅</h1>
 
-Nom : Sa Bento <br>
-Prénom : Tony<br>
-Adresse : 8 Rue du Pré Vicinal, 31270 Cugnaux<br>
-Email : pelicarpa@hotmail.fr
+{% include('home/_partial.html.twig') with {'coordonnees' : coordonnees1} %}
+
+{% include('home/_partial.html.twig') with {'coordonnees' : coordonnees2} %}
 </div>
 {% endblock %}

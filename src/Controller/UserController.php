@@ -59,20 +59,21 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password2 = $form['password2']->getData();
-            if ($password2 !== "" && $password2 !== null) {
-                $encoded = $encoder->hashPassword($user, $password2);
+
+            $password = $form->get('password')->getData();
+            if ($password) {
+                $encoded = $encoder->hashPassword($user, $password);
                 $user->setPassword($encoded);
             }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
