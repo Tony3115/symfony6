@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,37 @@ class HomeController extends AbstractController
             ->html('<h2>Test email</h2>');
 
         $mailer->send($email);
+
+        return $this->render(
+            'home/email.html.twig',
+            [
+                'controller_name' => 'envoi réussi',
+            ],
+        );
+    }
+
+    #[Route('/phpmail', name: 'app_phpmail')]
+    public function phpmail(): Response
+    {
+        //configuration
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'in-v3.mailjet.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = '73c0d23ce55843bfc7cb08c0dfedd436';                     //SMTP username
+        $mail->Password   = '0ec33ec61e981098d5c5a028a34f78b9';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Port       = 465;
+
+        //envoi du mail
+        $mail->setFrom('tsbtoulouse31@gmail.com', 'Mailer');
+        $mail->addAddress('pelicarpa@hotmail.fr', 'Joe User');
+
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Test avec PHPMails';
+        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+
+        $mail->send();
 
         return $this->render(
             'home/email.html.twig',
