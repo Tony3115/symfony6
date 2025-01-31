@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\MessageGenerator;
 use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
@@ -88,6 +89,19 @@ class HomeController extends AbstractController
             'home/email.html.twig',
             [
                 'controller_name' => 'envoi réussi',
+            ],
+        );
+    }
+
+    #[Route('/service', name: 'app_service')]
+    public function service(MessageGenerator $msg): Response
+    {
+
+
+        return $this->render(
+            'home/email.html.twig',
+            [
+                'controller_name' => $msg->getHappyMessage(),
             ],
         );
     }
