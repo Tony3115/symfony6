@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MessageGenerator;
+use App\Service\PHPMailService;
 use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
@@ -102,6 +103,28 @@ class HomeController extends AbstractController
             'home/email.html.twig',
             [
                 'controller_name' => $msg->getHappyMessage(),
+            ],
+        );
+    }
+
+    #[Route('/phpmail_service', name: 'app_phpmail_service')]
+    public function phpmailService(PHPMailService $mail): Response
+    {
+
+        //envoi du mail
+        $mail->setFrom('tsbtoulouse31@gmail.com', 'Mailer');
+        $mail->addAddress('pelicarpa@hotmail.fr', 'Joe User');
+
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Test avec PHPMails';
+        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+
+        $mail->send();
+
+        return $this->render(
+            'home/email.html.twig',
+            [
+                'controller_name' => 'envoi réussi',
             ],
         );
     }
