@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -34,5 +36,27 @@ class HomeController extends AbstractController
                 "Email" => "houvenaeghel@hotmail.fr",
             ]
         ]);
+    }
+
+    #[Route('/mail', name: 'app_mail')]
+    public function mail(MailerInterface $mailer): Response
+    {
+
+        //envoi du mail
+        $email = new Email();
+        $email->from('symfony6@gmail.com')
+            ->to('pelicarpa@hotmail.fr')
+            ->subject('test email symfony')
+            ->text('texte email test')
+            ->html('<h2>Test email</h2>');
+
+        $mailer->send($email);
+
+        return $this->render(
+            'home/email.html.twig',
+            [
+                'controller_name' => 'envoi réussi',
+            ],
+        );
     }
 }
