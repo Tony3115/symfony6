@@ -13,6 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+
+    protected $pass;
+    public function __construct(string $mailjet_password)
+    {
+        $this->pass = $mailjet_password;
+    }
+
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
@@ -117,6 +124,36 @@ class HomeController extends AbstractController
 
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Test avec PHPMails';
+        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+
+        $mail->send();
+
+        return $this->render(
+            'home/email.html.twig',
+            [
+                'controller_name' => 'envoi réussi',
+            ],
+        );
+    }
+
+    #[Route('/tiers_service', name: 'app_tiers_service')]
+    public function tiersService(PHPMailer $mail): Response
+    {
+
+        $mail->isSMTP();
+        $mail->Host        = 'in-v3.mailjet.com';
+        $mail->SMTPAuth    = true;
+        $mail->Username    = '73c0d23ce55843bfc7cb08c0dfedd436';
+        $mail->Password    = $this->pass;
+        $mail->SMTPSecure  = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port        = 465;
+
+        //envoi du mail
+        $mail->setFrom('tsbtoulouse31@gmail.com', 'Mailer');
+        $mail->addAddress('pelicarpa@hotmail.fr', 'Joe User');
+
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Tiers service pass 2';
         $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
 
         $mail->send();

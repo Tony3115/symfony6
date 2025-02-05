@@ -5,12 +5,15 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
    app.dir.public:  '%kernel.project_dir%/public/'
+   mailjet_password: "0ec33ec61e981098d5c5a028a34f78b9"
+
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
+        bind:
+             $mailjet_password: '%mailjet_password%'
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -22,3 +25,4 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    PHPMailer\PHPMailer\PHPMailer: ~
