@@ -25,13 +25,26 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $form->get('password')->getData();
+            if ($password) {
+                $encoded = $encoder->hashPassword($user, $password);
+                $user->setPassword($encoded);
+            }
+
+            $params = $request->request->all();
+            if (isset($params['user']) && isset($params['user']['roles'])) {
+                $roles = $params['user']['roles'];
+                $user->setRoles([$roles]);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -65,7 +78,15 @@ class UserController extends AbstractController
                 $encoded = $encoder->hashPassword($user, $password);
                 $user->setPassword($encoded);
             }
+            $params = $request->request->all();
 
+
+            if (isset($params['user']) && isset($params['user']['roles'])) {
+                $roles = $params['user']['roles'];
+                $user->setRoles([$roles]);
+            }
+
+            $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
