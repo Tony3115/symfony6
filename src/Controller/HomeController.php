@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Service\MessageGenerator;
+use PHPMailer\PHPMailer\SMTP;
 use App\Service\PHPMailService;
-use PHPMailer\PHPMailer\PHPMailer;
+use App\Service\MessageGenerator;
 use Symfony\Component\Mime\Email;
+use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,9 +77,9 @@ class HomeController extends AbstractController
         //configuration
         $mail = new PHPMailer(true);
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'in-v3.mailjet.com';                     //Set the SMTP server to send through
+        $mail->Host       = 'whisker.o2switch.net';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = '73c0d23ce55843bfc7cb08c0dfedd436';                     //SMTP username
+        $mail->Username   = 'sato4773';                     //SMTP username
         $mail->Password   = '0ec33ec61e981098d5c5a028a34f78b9';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;
@@ -140,10 +141,12 @@ class HomeController extends AbstractController
     public function tiersService(PHPMailer $mail): Response
     {
 
+
         $mail->isSMTP();
-        $mail->Host        = 'in-v3.mailjet.com';
+
+        $mail->Host        = 'whisker.o2switch.net';
         $mail->SMTPAuth    = true;
-        $mail->Username    = '73c0d23ce55843bfc7cb08c0dfedd436';
+        $mail->Username    = 'sato4773';
         $mail->Password    = $this->pass;
         $mail->SMTPSecure  = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port        = 465;
