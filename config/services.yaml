@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
    app.dir.public:  '%kernel.project_dir%/public/'
-   mailjet_password: "0ec33ec61e981098d5c5a028a34f78b9"
+   mailjet_password: "aCtl@!&0VFE2"
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +19,8 @@ services:
     App\EventSubscriber\UserSubscriber:
         tags:
             - { name: kernel.event_subscriber }
+
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -28,6 +30,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\EventListener\UserDeleteListener:
+        tags: [{name: kernel.event_listener, event: userDelete.success, method: sendDeleteUserEmail}]
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     PHPMailer\PHPMailer\PHPMailer: ~
