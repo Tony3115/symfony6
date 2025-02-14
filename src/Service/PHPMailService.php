@@ -15,9 +15,11 @@ class PHPMailService extends \PHPMailer\PHPMailer\PHPMailer
         parent::__construct();
         //configuration
         $this->isSMTP();                                            //Send using SMTP
-        $this->Host       = 'in-v3.mailjet.com';                     //Set the SMTP server to send through
+        $this->CharSet = "UTF-8";
+        $this->Encoding = "base64";
+        $this->Host       = 'whisker.o2switch.net';                     //Set the SMTP server to send through
         $this->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $this->Username   = '73c0d23ce55843bfc7cb08c0dfedd436';                     //SMTP username
+        $this->Username   = 'sato4773';                     //SMTP username
         $this->Password   = $mailjet_password;                               //SMTP password
         $this->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $this->Port       = 465;
