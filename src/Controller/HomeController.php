@@ -80,7 +80,7 @@ class HomeController extends AbstractController
         $mail->Host       = 'whisker.o2switch.net';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'sato4773';                     //SMTP username
-        $mail->Password   = '0ec33ec61e981098d5c5a028a34f78b9';                               //SMTP password
+        $mail->Password   = "aCtl@!&0VFE2";                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;
 
